@@ -66,10 +66,16 @@ app.get('/allProducts', function(req, res){
 
 //Get single Product based on ID
 app.get('/product/:id', function(req, res){
-    const id = req.params.id;
-    Product.findById(id, function (err, product) {
-        res.send(product);
-    });
+  const id = req.params.id;
+
+  Product.findById(id, function(err, product) {
+    if (product['user_id'] == req.body.userId) {
+      res.send(product)
+    } else {
+      res.send('401')
+    }
+  })
+
 });
 
 // Update a product based on id
