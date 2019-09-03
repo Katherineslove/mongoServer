@@ -49,7 +49,7 @@ app.post('/product', function(req, res){
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         price: req.body.price,
-        user_id: req.body.userId,
+        user_id: req.body.userId
     });
 
     product.save().then(result => {
