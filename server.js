@@ -48,7 +48,8 @@ app.post('/product', function(req, res){
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        user_id: req.body.userId,
     });
 
     product.save().then(result => {
@@ -82,7 +83,6 @@ app.patch('/product/:id', function(req, res){
         res.send(result);
     }).catch(err => res.send(err));
 })
-
 
 // Delete a product based on id
 app.delete('/product/:id', function(req, res){
