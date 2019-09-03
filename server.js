@@ -45,7 +45,6 @@ app.get('/', function(req, res){
 
 //Add a new Product
 app.post('/product', function(req, res){
-  // console.log(req.body);
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -76,13 +75,20 @@ app.get('/product/:id', function(req, res){
 // Update a product based on id
 app.patch('/product/:id', function(req, res){
     const id = req.params.id;
-    const newProduct = {
-        name: req.body.name,
-        price: req.body.price
-    };
-    Product.updateOne({ _id : id }, newProduct).then(result => {
-        res.send(result);
-    }).catch(err => res.send(err));
+
+    Product.findById(id, function(err, product) {
+      if (product['user_id'] == req.body.userId){
+        const newProduct = {
+            name: req.body.name,
+            price: req.body.price
+        };
+        Product.updateOne({ _id : id }, newProduct).then(result => {
+            res.send(result);
+        }).catch(err => res.send(err));
+      } else {
+        res.send('401, permission denied')
+      }
+    }).catch(err => res.send('cannot find a product with that id'));
 })
 
 // Delete a product based on id
