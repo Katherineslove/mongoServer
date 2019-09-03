@@ -65,7 +65,7 @@ app.get('/allProducts', function(req, res){
 })
 
 //Get single Product based on ID
-app.get('/product/:id', function(req, res){
+app.post('/product/:id', function(req, res){
   const id = req.params.id;
 
   Product.findById(id, function(err, product) {
