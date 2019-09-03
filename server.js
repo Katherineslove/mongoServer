@@ -45,6 +45,7 @@ app.get('/', function(req, res){
 
 //Add a new Product
 app.post('/product', function(req, res){
+  // console.log(req.body);
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
