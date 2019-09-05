@@ -1,24 +1,18 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-//The bcryptjs module is used to hash/encrypt passwords so that we don't include the actual password in our database
 const bcrypt = require('bcryptjs');
 
-// Require the config file
 const config = require('./config.json');
-
-// Get the Model for our Product
 const Product = require('./models/products');
-// Get the Model for our Users
 const User = require('./models/users');
 
-// Connect to Mongoose
 mongoose.connect(`mongodb+srv://${config.MONGO_USER}:${config.MONGO_PASSWORD}@${config.MONGO_CLUSTER_NAME}.mongodb.net/shop?retryWrites=true&w=majority`, {useNewUrlParser: true});
 
-// Test the connection to mongoose
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -28,8 +22,6 @@ db.once('open', function() {
 // Convert our json data which gets sent into JS so we can process it
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
-
-// Allow Cross Origin requests, ie http to https requests
 app.use(cors());
 
 // Create a console message showing us what request we are asking for
